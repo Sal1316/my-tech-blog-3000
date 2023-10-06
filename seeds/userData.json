@@ -13,5 +13,10 @@
     "name": "Third User",
     "email": "thirduser@bootcamp.com",
     "password": "password12345!"
+  },
+  {
+    "name": "Sal",
+    "email": "Sal@gmail.com",
+    "password": "Password"
   }
 ]

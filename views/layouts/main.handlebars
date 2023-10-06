@@ -15,7 +15,7 @@
 
   <body>
     <header class='display-flex justify-space-between align-center p-2'>
-      {{{> navbar }}}
+      {{> navbar}}
       <!-- Only display the logout button if the user is logged in -->
       {{#if logged_in}}
         <nav>
@@ -25,7 +25,7 @@
       {{/if}}
     </header>
     <main class='container container-fluid mt-5'>
-      {{{body}}}
+      {{{body}}}  {{!-- WHre all the subhandlebars get displayed.--}}
     </main>
     <footer>
 
@@ -44,5 +44,9 @@
 
 </html>
 
-{{!-- Where is the {{{body}}} coming from? It is convention but the homepage.handlebars is what gets rendered into the {{{body}}} because that is the root file.  So basically
-    it looks for the views then the layout and thats the file that is used to display the main.   --}}
+{{!-- Where is the {{{body}}} coming from? It is convention but the homepage.handlebars is what gets 
+    rendered into the {{{body}}} because that is the file that we render when hitting the root endpoint. 
+    So, basically it looks in the views then the layout and thats the file that is used to display the {{body}}.   --}}
+
+   
+{{!--  {{}} you can do html/js too, and {{{}}} is for--}}
