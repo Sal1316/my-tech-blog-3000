@@ -1,8 +1,8 @@
 const router = require("express").Router();
-// const withAuth = require("../utils/auth");
+const Blog = require("../models/Blog");
+const withAuth = require("../utils/auth");
 
-// I dont thing this need: withAuth, since its the first page that loads.
-router.get("/", async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findAll();
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
@@ -12,15 +12,14 @@ router.get("/", async (req, res) => {
       user: req.session.user,
       logged_in: req.session.logged_in,
       blog: "Blog details",
-      // blogs,
+      blogs: blogs,
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// This one requires: withAuth,
-router.get("/dashboard", async (req, res) => {
+router.get("/dashboard", withAuth, async (req, res) => {
   try {
     res.render("dashboardPage", {
       user: req.session.user,
@@ -38,6 +37,15 @@ router.get("/login", (req, res) => {
   }
 
   res.render("login");
+});
+router.get("/signup", async (req, res) => {
+  try {
+    res.render("signup", {
+      text: "SIgn UP now",
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 // dont need /logout since its just wired to a button.
 module.exports = router;

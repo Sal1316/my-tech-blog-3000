@@ -24,6 +24,7 @@ Blog.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
+        // this makes user_id the Foriegn Key.
         model: "user",
         key: "id",
       },

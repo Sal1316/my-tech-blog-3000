@@ -9,23 +9,22 @@
       crossorigin='anonymous'
     />
     <link rel='stylesheet' href='/css/jass.css' />
-    <link rel='stylesheet' href='/public/css/styles.css' />
+    <link rel='stylesheet' href='/css/styles.css' />
     <title>MVC Project Template</title>
   </head>
 
   <body>
     <header class='display-flex justify-space-between align-center p-2'>
-      {{> navbar}}
+      {{> navbar }}
       <!-- Only display the logout button if the user is logged in -->
       {{#if logged_in}}
         <nav>
           <span>Logged in as: {{user.name}}</span>
-          <button class='btn' id='logout'>logout</button>
         </nav>
       {{/if}}
     </header>
     <main class='container container-fluid mt-5'>
-      {{{body}}}  {{!-- WHre all the subhandlebars get displayed.--}}
+      {{{body}}}  {{!-- should display the homepage --}}
     </main>
     <footer>
 
@@ -37,9 +36,7 @@
       crossorigin='anonymous'
     ></script>
     <!-- Only include the logout script if the user is logged in -->
-    {{#if logged_in}}
-      <script src='/js/logout.js'></script>
-    {{/if}}
+  
   </body>
 
 </html>
@@ -50,3 +47,5 @@
 
    
 {{!--  {{}} you can do html/js too, and {{{}}} is for--}}
+
+{{!-- If you have partials, the file name has to be 'partials' or else you get errors. --}}

@@ -1,22 +1,22 @@
 [
   {
-    "name": "First User",
-    "email": "firstuser@bootcamp.com",
-    "password": "password12345!"
+    "name": "Mango",
+    "email": "mango@gmail.com",
+    "password": "Password1!"
   },
   {
-    "name": "Second User",
-    "email": "seconduser@bootcamp.com",
-    "password": "password12345!"
+    "name": "ElChango",
+    "email": "elchango@gmail.com",
+    "password": "Password1!"
   },
   {
-    "name": "Third User",
-    "email": "thirduser@bootcamp.com",
-    "password": "password12345!"
+    "name": "Hercules",
+    "email": "hercules@gmail.com",
+    "password": "Password1!"
   },
   {
     "name": "Sal",
-    "email": "Sal@gmail.com",
-    "password": "Password"
+    "email": "sal@gmail.com",
+    "password": "Password1"
   }
 ]

@@ -1,22 +1,22 @@
 [
-      {
-        "title": "Great Read",
-        "body": "This is the best thing since the invetion of water.",
-        "user_id": 1
-      },
-      {
-        "title": "Post More",
-        "body": "This is the best thing since the invetion of water.",
-        "user_id": 2
-      },
-      {
-        "title": "",
-        "body": "This is adsfasdfadsfadsf best thing since the invetion of water.",
-        "user_id": 3
-      },
-      {
-        "title": "Greasdfat Read2",
-        "body": "This is aasdfasdfasdf best thing since the invetion of water.",
-        "user_id": 2
-      }
+  {
+    "title": "Great Read",
+    "body": "This is the best thing since the invetion of water.",
+    "user_id": 1
+  },
+  {
+    "title": "Post More",
+    "body": "I really enjoyed the way the characters were introduced. It was a surprise to fine out that the end was near.",
+    "user_id": 2
+  },
+  {
+    "title": "Cant say Enough about the review",
+    "body": "Enough! Oh, I guess I can.",
+    "user_id": 3
+  },
+  {
+    "title": "Wow. That was the biggest waste of time.",
+    "body": "I went in hyped because of the reviews, but was incredibly dissapointed.",
+    "user_id": 1
+  }
 ]
