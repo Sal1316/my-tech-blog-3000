@@ -1,0 +1,12 @@
+/* homepage */
+#blogs {
+  margin-bottom: 15px;
+}
+#blog_header {
+  display: flex;
+  justify-content: space-between;
+}
+.card-title,
+h6 {
+  display: inline;
+}

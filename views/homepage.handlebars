@@ -3,10 +3,24 @@
     <h2>Homepage</h2>
   </div>
 </div>
+
+{{#each blogs}}
+  <div id="blogs" class="card" style="width:1000px;">
+    <div class="card-body">
+      <div id="blog_header">
+        <h3 class="card-title">{{title}}</h3>
+        <h6>Posted by {{user_id}} on {{format_date createdAt}}</h6>
+        {{! should be user Name. }}
+      </div>
+      <p class="card-text">{{body}}</p>
+    </div>
+  </div>
+{{/each}}
+
+
+
 <div>
-  <p>Add New Post</p>
+  <button type="button" class="btn btn-primary">New Post +</button>
 </div>
 
 {{! Homepage should render the homepage when you open up the app. }}
-
-<script src="./test.js"></script>
