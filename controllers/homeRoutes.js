@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const Blog = require("../models/Blog");
-const withAuth = require("../utils/auth");
+// const withAuth = require("../utils/auth");
 
-router.get("/", withAuth, async (req, res) => {
+// withAuth,
+router.get("/", async (req, res) => {
   try {
     const blogData = await Blog.findAll();
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
@@ -18,24 +19,18 @@ router.get("/", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get("/blogs/:id", withAuth, async (req, res) => {
+
+// withAuth,
+router.get("/blog/:id", async (req, res) => {
   try {
-    const individualBlogData = await Blog.findByPk(req.params.id, {
-      include: [
-        {
-          model: Blog,
-          attributes: ["title", "body", "name", "createdAt"],
-        },
-      ],
-    });
+    const individualBlogData = await Blog.findByPk(req.params.id);
     if (!blogData) {
       res.status(404).json({ message: "Blog post not found" });
       return;
     }
     const blog = individualBlogData.get({ plain: true });
-    res.render("blogs", {
-      gallery,
-      loggedIn: req.session.loggedIn,
+    res.render("blog", {
+      logged_In: req.session.logged_In,
       blog,
     });
   } catch (err) {
@@ -44,7 +39,8 @@ router.get("/blogs/:id", withAuth, async (req, res) => {
   }
 });
 
-router.get("/dashboard", withAuth, async (req, res) => {
+// withAuth,
+router.get("/dashboard", async (req, res) => {
   try {
     res.render("dashboardPage", {
       user: req.session.user,
