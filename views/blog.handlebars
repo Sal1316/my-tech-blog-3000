@@ -1,12 +1,115 @@
-Blogs.. shows all the blogs
-<div id="blogs" class="card" style="width:1000px;">
-  <a href="/blog/{{id}}">
-     <div class="card-body">
-    <div id="blog_header">
-      <h3 class="card-title">{{title}}</h3>
-      <h6>Posted by {{user_id}}</h6>
-    </div>
+{{!-- Shows 1 Blog matching the Id --}}
+{{comments}}
+Blog... Shows up in Homepage/blog
+<section class="card">
+  <header>title: {{blog.title}}</header>
+  <div class="card-contents">
+    <p>Contents: {{blog.body}}</p>
+    <p>User Id: {{blog.user_id}}</p>
+    <p>Blog Id: {{blog.id}}</p>
+    <p>Date: {{format_date blog.createdAt}}</p>
   </div>
-  </a>
- 
+</section>
+<div>
+  <button id="updateBlog" class="btn btn-warning">Update </button>
+  <button id="deleteBlog" class="btn btn-danger">Delete </button>
 </div>
+
+
+
+{{#if comments}}
+{{#each comments}}
+{{> comment-template}}
+{{/each }}
+{{/if}}
+
+{{! Need code that once 'comment btn clicked, shows input box' }}
+
+{{! Comment Input Box }}
+<div id="commentDiv" class="form-floating">
+  <textarea class="form-control" placeholder="Leave a comment here" id="comments" style="height: 100px"></textarea>
+  <label for="comments">Comments</label>
+  <div>
+    <button id="postBlog" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+{{!-- script for Update and Delete Buttons --}}
+<script>
+  const editBlogFormHandler = async (event) => {
+    event.preventDefault();
+
+    const blogId = 7; // WHere do I get the Id From?
+
+    const title = document.getElementById("blogTitle").value.trim();
+    const body = document.getElementById("blogBody").value.trim();
+
+    if (title && body) {
+      const response = await fetch(`/api/users/blogs/${blogId}`, {
+        method: "PUT",
+        body: JSON.stringify({ title: title, body: body }),
+        headers: { "Content-Type": "application/json" },
+      })
+
+      if (response.ok) {
+        document.location.replace("/dashboard");
+      }
+      else {
+        alert(response.statusText);
+      }
+    }
+  };
+
+  const deleteBlogFormHandler = async (event) => {
+    event.preventDefault();
+
+    const blogId = 7;
+
+    const response = await fetch(`/api/users/blogs/${blogId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      document.location.replace("/dashboard");
+    }
+    else {
+      alert(response.statusText);
+    }
+
+  };
+
+  const postBlogFormHandler = async (event) => {
+    event.preventDefault();
+
+    const body = document.getElementById("comments").value.trim();
+
+    if (body) {
+      const response = await fetch(`/api/users/blogs`, {
+        method: "POST",
+        body: JSON.stringify({ user_id: user_id body: body }),
+        headers: { "Content-Type": "application/json" },
+      })
+
+      if (response.ok) {
+        document.location.replace("/dashboard");
+      }
+      else {
+        alert(response.statusText);
+      }
+    }
+  }
+
+  document
+    .getElementById("updateBlog")
+    .addEventListener("click", editBlogFormHandler);
+
+  document
+    .getElementById("deleteBlog")
+    .addEventListener("click", deleteBlogFormHandler);
+
+  document
+    .getElementById("postBlog")
+    .addEventListener("click", postBlogFormHandler);
+
+</script>

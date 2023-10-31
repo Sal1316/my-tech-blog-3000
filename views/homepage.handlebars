@@ -4,12 +4,10 @@
   </div>
 </div>
 
-{{#each blog}}
-Blogs.. shows all the blogs
-{{> blog}}
+
+{{#each blogs}}
+{{> blog-template this}}
 {{/each}}
-
-
 
 <div>
   <button type="button" class="btn btn-primary">New Post +</button>

@@ -1,17 +1,17 @@
 [
-      {
-        "title": "Great Read",
-        "review_text": "This is the best thing since the invetion of water.",
-        "rating": 5
-      },
-      {
-        "name": "Very Informative",
-        "review_text": "How have I been living my life without this article",
-        "rating": 5
-      },
-      {
-        "name": "Could have used this when i started.",
-        "review_text": "I wish they tought this when I was learning the material. It would have made things alot easier.",
-        "rating": 4
-      }
+  {
+    "title": "Great Read",
+    "review_text": "This is the best thing since the invetion of water.",
+    "rating": 5
+  },
+  {
+    "title": "Very Informative",
+    "review_text": "How have I been living my life without this article",
+    "rating": 5
+  },
+  {
+    "title": "Could have used this when i started.",
+    "review_text": "I wish they tought this when I was learning the material. It would have made things alot easier.",
+    "rating": 4
+  }
 ]

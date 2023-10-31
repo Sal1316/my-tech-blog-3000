@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Blog = require("../models/Blog");
+const Comment = require("../models/Comment");
 // const withAuth = require("../utils/auth");
 
 // withAuth,
@@ -7,7 +8,6 @@ router.get("/", async (req, res) => {
   try {
     const blogData = await Blog.findAll();
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
-    console.log("Blogs: ", blogs);
 
     res.render("homepage", {
       user: req.session.user,
@@ -24,14 +24,18 @@ router.get("/", async (req, res) => {
 router.get("/blog/:id", async (req, res) => {
   try {
     const individualBlogData = await Blog.findByPk(req.params.id);
-    if (!blogData) {
-      res.status(404).json({ message: "Blog post not found" });
-      return;
-    }
     const blog = individualBlogData.get({ plain: true });
+    const commentData = await Comment.findAll({
+      where: { user_id: req.params.id },
+    });
+    console.log("CommentData", commentData);
+    const comments = commentData.map((comment) => comment.get({ plain: true }));
+    console.log("Comments", comments);
+
     res.render("blog", {
       logged_In: req.session.logged_In,
       blog,
+      comments: comments,
     });
   } catch (err) {
     console.log(err);
@@ -41,10 +45,37 @@ router.get("/blog/:id", async (req, res) => {
 
 // withAuth,
 router.get("/dashboard", async (req, res) => {
+  const usersBlog = await Blog.findAll({
+    where: {
+      user_id: 1, // should return atleast 2 plus the one we created.
+    },
+  });
+  if (!usersBlog || usersBlog.length === 0) {
+    res
+      .status(404)
+      .json({ message: "Blog post not found, or you have not Blogs" });
+    return;
+  }
+  const usersBlogs = usersBlog.map((blog) => blog.get({ plain: true }));
+
+  const blogComment = await Comment.findAll();
+  if (!blogComment || blogComment.length === 0) {
+    res
+      .status(404)
+      .json({ message: "Blog post not found, or you have not Blogs" });
+    return;
+  }
+  const blogComments = blogComment.map((comment) =>
+    comment.get({ plain: true })
+  );
+
   try {
     res.render("dashboardPage", {
       user: req.session.user,
+      id: req.session.id,
       logged_in: req.session.logged_in,
+      usersBlogs: usersBlogs,
+      blogComments: blogComments,
     });
   } catch (err) {
     res.status(500).json(err);

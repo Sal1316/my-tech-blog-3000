@@ -1,5 +1,68 @@
-{{! 
-Dashboard page should render after you have been logged in.
- }}
-
 <div>DashBoard Page</div>
+{{user.name}}
+
+
+{{!-- Display the Blog posts that User has created and the option to add a new one. --}}
+{{#each usersBlogs }}
+{{> blog-details }}
+{{/each}}
+{{#each blogComments}}
+{{> comment-partial}}
+{{/each}}
+{{! Blog Input Box }}
+<div id="blogDiv">
+      <div class="form-floating">
+            <textarea class="form-control" id="blogTitle"></textarea>
+            <label for="blogTitle">Blog Title</label>
+      </div>
+      <div class="form-floating">
+            <textarea class="form-control" id="blogBody" style="height: 100px"></textarea>
+            <label for="blogBody">Blog Body Contents</label>
+      </div>
+</div>
+<div>
+      <button id="postBtn" class="btn btn-primary">Post Blog +</button>
+</div>
+
+
+<script>
+      const postBlogFormHandler = async (event) => {
+            event.preventDefault();
+            console.log("🚔 from inside postBlogFormHandler:", event.target)
+
+            // Collect values from the blog form
+            const title = document.getElementById("blogTitle").value.trim();
+            const body = document.getElementById("blogBody").value.trim();
+
+            if (title && body) {
+                  const response = await fetch("/api/users/blogs", {
+                        method: "POST",
+                        body: JSON.stringify({ user_id: 1, title: title, body: body }),
+                        headers: { "Content-Type": "application/json" },
+                  })
+
+                  if (response.ok) {
+                        document.location.replace("/dashboard");
+                  }
+                  else {
+                        alert(response.statusText);
+                  }
+            }
+      };
+
+      document
+            .getElementById("postBtn")
+            .addEventListener("click", postBlogFormHandler);
+
+
+</script>
+
+{{!--
+commentBtn.addEventListener("click", function () {
+if (commentDiv.classList =
+"hidden") { commentDiv.classList.toggle("show");
+}
+else {
+commentDiv.classList.toggle("hidden")
+}
+}); --}}
