@@ -28,9 +28,8 @@ router.get("/blog/:id", async (req, res) => {
     const commentData = await Comment.findAll({
       where: { user_id: req.params.id },
     });
-    console.log("CommentData", commentData);
+  
     const comments = commentData.map((comment) => comment.get({ plain: true }));
-    console.log("Comments", comments);
 
     res.render("blog", {
       logged_In: req.session.logged_In,
@@ -99,42 +98,5 @@ router.get("/signup", async (req, res) => {
     res.status(500).json(err);
   }
 });
-// dont need /logout since its just wired to a button.
+
 module.exports = router;
-
-/*
-
-// GET one gallery
-router.get('/gallery/:id', async (req, res) => {
-  // If the user is not logged in, redirect the user to the login page
-  if (!req.session.loggedIn) {
-    res.redirect('/login');
-  } else {
-    // If the user is logged in, allow them to view the gallery
-    try {
-      const dbGalleryData = await Gallery.findByPk(req.params.id, {
-        include: [
-          {
-            model: Painting,
-            attributes: [
-              'id',
-              'title',
-              'artist',
-              'exhibition_date',
-              'filename',
-              'description',
-            ],
-          },
-        ],
-      });
-      const gallery = dbGalleryData.get({ plain: true });
-      res.render('gallery', { gallery, loggedIn: req.session.loggedIn });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  }
-});
-
-
-*/

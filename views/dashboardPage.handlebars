@@ -4,11 +4,11 @@
 
 {{!-- Display the Blog posts that User has created and the option to add a new one. --}}
 {{#each usersBlogs }}
-{{> blog-details }}
+{{> blog-template }}
 {{/each}}
-{{#each blogComments}}
-{{> comment-partial}}
-{{/each}}
+{{!-- Dashboard should not show comments{{#each blogComments}}
+{{> comment-template}}
+{{/each}} --}}
 {{! Blog Input Box }}
 <div id="blogDiv">
       <div class="form-floating">
@@ -26,9 +26,9 @@
 
 
 <script>
-      const postBlogFormHandler = async (event) => {
+      const editBlogFormHandler = async (event) => {
             event.preventDefault();
-            console.log("🚔 from inside postBlogFormHandler:", event.target)
+            console.log("🚔 from inside postBlogFormHandlerT:", event.target)
 
             // Collect values from the blog form
             const title = document.getElementById("blogTitle").value.trim();
@@ -36,7 +36,7 @@
 
             if (title && body) {
                   const response = await fetch("/api/users/blogs", {
-                        method: "POST",
+                        method: "PUT",
                         body: JSON.stringify({ user_id: 1, title: title, body: body }),
                         headers: { "Content-Type": "application/json" },
                   })
@@ -52,9 +52,36 @@
 
       document
             .getElementById("postBtn")
-            .addEventListener("click", postBlogFormHandler);
+            .addEventListener("click", editBlogFormHandler);
 
+      const postCommentFormHandler = async (event) => {
+            event.preventDefault();
+            console.log("🚔 from inside postCommentFormHandler:", event.target)
 
+            //Collect values from the blog form
+            const title = document.getElementById("blogTitle").value.trim();
+            const body = document.getElementById("blogBody").value.trim();
+
+            if (true) {
+                  const response = await fetch("/api/users/comments", {
+                        method: "POST",
+                        // Make a user form input or get from {{user.name}}
+                        body: JSON.stringify({ user_id: user_id, title: title, body: body }),
+                        headers: { "Content-Type": "application/json" },
+                  })
+
+                  if (response.ok) {
+                        document.location.replace("/dashboard");
+                  }
+                  else {
+                        alert(response.statusText);
+                  }
+            }
+      };
+
+      document
+            .getElementById("postBtn")
+            .addEventListener("click", postCommentFormHandler);
 </script>
 
 {{!--

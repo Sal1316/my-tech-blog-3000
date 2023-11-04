@@ -34,13 +34,16 @@ router.post("/blogs", (req, res) => {
 
 router.post("/comments", (req, res) => {
   // Logs that a POST request was received
-  console.log(
-    "POST ENDPOINT: ",
-    `${req.method} request received to add a review`
-  );
-  console.log("BLOG REQUEST ENDPOINT!!!!!");
-  Comment.create(req.body)
-    .then((reviewData) => res.json(reviewData))
+
+  Comment.create({
+    ...req.body,
+    user_name: req.session.user.name,
+    user_id: req.session.user.id,
+  })
+    .then((reviewData) => {
+      console.log("reviewData: ", reviewData);
+      res.json(reviewData);
+    })
     .catch((err) => res.json(err));
 });
 
