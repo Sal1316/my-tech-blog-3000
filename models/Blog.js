@@ -25,7 +25,7 @@ Blog.init(
       allowNull: false,
       references: {
         // this makes user_id the Foriegn Key.
-        model: "user",
+        model: "user", //User,
         key: "id",
       },
     },

@@ -6,13 +6,13 @@ const Comment = require("../models/Comment");
 // withAuth,
 router.get("/", async (req, res) => {
   try {
-    const blogData = await Blog.findAll();
+    const blogData = await Blog.findAll({ include: "user" });
+    console.log("🚀 blogData:", blogData);
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
     res.render("homepage", {
       user: req.session.user,
       logged_in: req.session.logged_in,
-      blog: "Blog details",
       blogs: blogs,
     });
   } catch (err) {
@@ -27,8 +27,9 @@ router.get("/blog/:id", async (req, res) => {
     const blog = individualBlogData.get({ plain: true });
     const commentData = await Comment.findAll({
       where: { user_id: req.params.id },
+      // Doesnt make sense to get all comments by user id. Need to assign the comments to the their respective post.
     });
-  
+
     const comments = commentData.map((comment) => comment.get({ plain: true }));
 
     res.render("blog", {

@@ -1,21 +1,20 @@
 {{!-- Shows 1 Blog matching the Id --}}
-{{comments}}
-Blog... Shows up in Homepage/blog
 <section class="card">
   <header>title: {{blog.title}}</header>
   <div class="card-contents">
     <p>Contents: {{blog.body}}</p>
+    <p>Post Creator's Username: {{blog.name}}</p>
+    <p>Post Creator's Username: {{user.name}}</p>
+    <p>Post Creator's Username: {{blogs}}</p>
     <p>User Id: {{blog.user_id}}</p>
     <p>Blog Id: {{blog.id}}</p>
-    <p>Date: {{format_date blog.createdAt}}</p>
+    <p>Date Created: {{format_date blog.createdAt}}</p>
   </div>
 </section>
 <div>
   <button id="updateBlog" class="btn btn-warning">Update </button>
   <button id="deleteBlog" class="btn btn-danger">Delete </button>
 </div>
-
-
 
 {{#if comments}}
 {{#each comments}}
@@ -30,7 +29,7 @@ Blog... Shows up in Homepage/blog
   <textarea class="form-control" placeholder="Leave a comment here" id="userComment1" style="height: 100px"></textarea>
   <label for="userComment1">Comments</label>
   <div>
-    <button id="postBlog" class="btn btn-primary">Submit</button>
+    <button id="submitComment" class="btn btn-primary">Submit Comment</button>
   </div>
 </div>
 
@@ -79,7 +78,8 @@ Blog... Shows up in Homepage/blog
 
   };
 
-  const postBlogFormHandler = async (event) => {
+  const submitCommentFormHandler = async (event) => {
+    //console.log("UsEr Properties: ", req.session.user.id)
     event.preventDefault();
     const comment = document.getElementById("userComment1").value.trim();
 
@@ -91,7 +91,7 @@ Blog... Shows up in Homepage/blog
       })
 
       if (response.ok) {
-        // document.location.replace("/dashboard");
+        document.location.replace("/blog/4"); // need to make the user id responsive!
       }
       else {
         alert(response.statusText);
@@ -108,7 +108,7 @@ Blog... Shows up in Homepage/blog
     .addEventListener("click", deleteBlogFormHandler);
 
   document
-    .getElementById("postBlog")
-    .addEventListener("click", postBlogFormHandler);
+    .getElementById("submitComment")
+    .addEventListener("click", submitCommentFormHandler);
 
 </script>

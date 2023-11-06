@@ -21,27 +21,25 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/blogs", (req, res) => {
-  // Logs that a POST request was received
-  console.log(
-    "POST ENDPOINT: ",
-    `${req.method} request received to add a review`
-  );
-  console.log("BLOG REQUEST ENDPOINT!!!!!");
-  Blog.create(req.body)
+  console.log("🏀 req.body from BLOGs POST:", req.body);
+  console.log("USER ID from Blogs: ", req.session.user.id);
+
+  Blog.create({ ...req.body, user_id: req.session.user.id })
     .then((reviewData) => res.json(reviewData))
     .catch((err) => res.json(err));
 });
 
 router.post("/comments", (req, res) => {
+  console.log("USER NAME from Comment: ", req.session.user.name);
+  console.log("USER ID from Comment: ", req.session.user.id);
   // Logs that a POST request was received
 
   Comment.create({
-    ...req.body,
-    user_name: req.session.user.name,
-    user_id: req.session.user.id,
+    ...req.body, // should be brought in from blog.handlebars script.
+    user_name: req.session.user.name, // cannot be null
+    user_id: req.session.user.id, // cannot be null
   })
     .then((reviewData) => {
-      console.log("reviewData: ", reviewData);
       res.json(reviewData);
     })
     .catch((err) => res.json(err));

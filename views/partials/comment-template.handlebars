@@ -1,8 +1,9 @@
 user comments..
 <section id="comments" class="card">
-  <header>User: {{user_name}}</header>
+  <header>Username: {{user_name}}</header>
   <div class="card-contents">
-    <p>Blog BOdy: {{comment}}</p>
-    <p>User Id: {{user_id}}</p>
+    <p>Comment: {{comment}}</p>
+    <p>Date Created: {{format_date createdAt}}</p>
+    <p>User Id: {{user_id}}</p> {{!-- For testing only --}}
   </div>
 </section>
