@@ -1,20 +1,19 @@
 {{!-- Shows 1 Blog matching the Id --}}
+blog:
 <section class="card">
-  <header>title: {{blog.title}}</header>
+  <header>Title: {{blog.title}}</header>
   <div class="card-contents">
     <p>Contents: {{blog.body}}</p>
-    <p>Post Creator's Username: {{blog.name}}</p>
-    <p>Post Creator's Username: {{user.name}}</p>
-    <p>Post Creator's Username: {{blogs}}</p>
-    <p>User Id: {{blog.user_id}}</p>
-    <p>Blog Id: {{blog.id}}</p>
+    <p>Post Creator's Username: {{blog.user.name}}</p> {{!-- need to ref user name like this since we included User in
+    the Blog request. --}}
     <p>Date Created: {{format_date blog.createdAt}}</p>
   </div>
 </section>
-<div>
-  <button id="updateBlog" class="btn btn-warning">Update </button>
-  <button id="deleteBlog" class="btn btn-danger">Delete </button>
-</div>
+
+{{!-- <div>
+  <button id="updateBlog" class="btn btn-warning" data-id={{blog.id}}>Update </button>
+  <button id="deleteBlog" class="btn btn-danger" data-id={{blog.id}}>Delete </button>
+</div> --}}
 
 {{#if comments}}
 {{#each comments}}
@@ -22,82 +21,91 @@
 {{/each }}
 {{/if}}
 
-{{! Need code that once 'comment btn clicked, shows input box' }}
-
-{{! Comment Input Box }}
+<div>Comments</div>
 <div id="commentDiv" class="form-floating">
-  <textarea class="form-control" placeholder="Leave a comment here" id="userComment1" style="height: 100px"></textarea>
+  <textarea class="form-control" id="userComment1" data-id={{blog.id}} style="height: 100px"></textarea>
   <label for="userComment1">Comments</label>
   <div>
-    <button id="submitComment" class="btn btn-primary">Submit Comment</button>
+    <button id="submitComment2" class="btn btn-primary">Submit Comment</button>
   </div>
 </div>
 
-{{!-- script for Update and Delete Buttons --}}
+
 <script>
+  const url = window.location.href;
+  const splitUrl = url.split('/'); // creates an array [http:, localhost:3001, blog, 6]
+  const blogId = splitUrl[splitUrl.length - 1];
+
   const editBlogFormHandler = async (event) => {
     event.preventDefault();
-
-    const blogId = 7; // WHere do I get the Id From?
 
     const title = document.getElementById("blogTitle").value.trim();
     const body = document.getElementById("blogBody").value.trim();
 
-    if (title && body) {
-      const response = await fetch(`/api/users/blogs/${blogId}`, {
-        method: "PUT",
-        body: JSON.stringify({ title: title, body: body }),
-        headers: { "Content-Type": "application/json" },
-      })
+    if (event.target.hasAttribute('data-id')) {
+      const id = event.target.getAttribute('data-id');
 
-      if (response.ok) {
-        document.location.replace("/dashboard");
+      if (title && body) {
+        const response = await fetch(`/api/users/blogs/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({ title: title, body: body }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+          document.location.replace('/');
+        } else {
+          alert('Failed to UPDATE Blog');
+        }
       }
-      else {
-        alert(response.statusText);
-      }
-    }
+    };
   };
 
+  //done
   const deleteBlogFormHandler = async (event) => {
     event.preventDefault();
 
-    const blogId = 7;
+    //const url = window.location.href;
+    //const splitUrl = url.split('/'); // creates an array [http:, localhost:3001, blog, 6]
+    //const blogId = splitUrl[splitUrl.length - 1]; // to get last value, you need to put inside array, otherwise, you get the last array index which is 4.
 
-    const response = await fetch(`/api/users/blogs/${blogId}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
+    if (event.target.hasAttribute('data-id')) {
+      const id = event.target.getAttribute('data-id');
 
-    if (response.ok) {
-      document.location.replace("/dashboard");
+      const response = await fetch(`/api/users/blogs/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        document.location.replace('/');
+      } else {
+        alert('Failed to DELETE Blog');
+      }
     }
-    else {
-      alert(response.statusText);
-    }
-
   };
-
+  //done
   const submitCommentFormHandler = async (event) => {
-    //console.log("UsEr Properties: ", req.session.user.id)
     event.preventDefault();
     const comment = document.getElementById("userComment1").value.trim();
 
     if (comment) {
       const response = await fetch(`/api/users/comments`, {
         method: "POST",
-        body: JSON.stringify({ comment: comment }),
+        body: JSON.stringify({ comment: comment, user_id: blogId }),
         headers: { "Content-Type": "application/json" },
       })
 
       if (response.ok) {
-        document.location.replace("/blog/4"); // need to make the user id responsive!
+        document.location.replace(`/blog/${blogId}`); // need to make the user id responsive!
       }
       else {
         alert(response.statusText);
       }
     }
   }
+  document
+    .getElementById("submitComment2")
+    .addEventListener("click", submitCommentFormHandler);
 
   document
     .getElementById("updateBlog")
@@ -107,8 +115,6 @@
     .getElementById("deleteBlog")
     .addEventListener("click", deleteBlogFormHandler);
 
-  document
-    .getElementById("submitComment")
-    .addEventListener("click", submitCommentFormHandler);
+
 
 </script>

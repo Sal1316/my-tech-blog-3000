@@ -3,16 +3,18 @@
     <a href="/">Home</a>
     <a href="/dashboard">Dashboard</a>
     {{#if logged_in}}
-      <a id="logout" href="">Logout</a>
+    <a id="logout" href="">Logout</a>
     {{else}}
-      <a href="/login">Login</a>
+    <a href="/login">Login</a>
     {{/if}}
   </div>
   <div id="tech-blog">
-    <h1>The Tech Blog</h1>
+    {{#if subTitle}}
+    <h1>{{subTitle}}</h1>
+    {{/if}}
   </div>
 </nav>
 
 {{#if logged_in}}
-  <script src="/js/logout.js"></script>
+<script src="/js/logout.js"></script>
 {{/if}}

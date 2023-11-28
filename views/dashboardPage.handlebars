@@ -1,30 +1,10 @@
 <div>DashBoard Page</div>
-{{user.name}}
 
-
-{{!-- Display the Blog posts that User has created and the option to add a new one. --}}
 {{#each usersBlogs }}
 {{> blog-template }}
 {{/each}}
-{{!-- Dashboard should not show comments{{#each blogComments}}
-{{> comment-template}}
-{{/each}} --}}
 
-{{!-- Blog Input Box --}}
-<div id="blogDiv">
-      <div class="form-floating">
-            <textarea class="form-control" id="blogTitle"></textarea>
-            <label for="blogTitle">Blog Title</label>
-      </div>
-      <div class="form-floating">
-            <textarea class="form-control" id="blogBody" style="height: 100px"></textarea>
-            <label for="blogBody">Blog Body Contents</label>
-      </div>
-</div>
-<div>
-      <button id="postBtn" class="btn btn-primary">Post Blog +</button>
-</div>
-
+{{> create-blog-post }}
 
 <script>
       const postBlogFormHandler = async (event) => {

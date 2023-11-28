@@ -1,11 +1,13 @@
 const router = require("express").Router();
 const Blog = require("../models/Blog");
 const Comment = require("../models/Comment");
+const User = require("../models/User");
 // const withAuth = require("../utils/auth");
 
 // withAuth,
 router.get("/", async (req, res) => {
   try {
+    const subTitle = "The Tech Blog";
     const blogData = await Blog.findAll({ include: "user" });
     console.log("🚀 blogData:", blogData);
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
@@ -14,6 +16,7 @@ router.get("/", async (req, res) => {
       user: req.session.user,
       logged_in: req.session.logged_in,
       blogs: blogs,
+      subTitle,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -23,7 +26,10 @@ router.get("/", async (req, res) => {
 // withAuth,
 router.get("/blog/:id", async (req, res) => {
   try {
-    const individualBlogData = await Blog.findByPk(req.params.id);
+    const subTitle = "The Tech Blog";
+    const individualBlogData = await Blog.findByPk(req.params.id, {
+      include: User,
+    });
     const blog = individualBlogData.get({ plain: true });
     const commentData = await Comment.findAll({
       where: { user_id: req.params.id },
@@ -31,11 +37,13 @@ router.get("/blog/:id", async (req, res) => {
     });
 
     const comments = commentData.map((comment) => comment.get({ plain: true }));
+    // console.log("commentData FOR TESTING ONLY", commentData);
 
     res.render("blog", {
       logged_In: req.session.logged_In,
       blog,
       comments: comments,
+      subTitle,
     });
   } catch (err) {
     console.log(err);
@@ -45,9 +53,13 @@ router.get("/blog/:id", async (req, res) => {
 
 // withAuth,
 router.get("/dashboard", async (req, res) => {
+  const subTitle = "Your Dashboard";
+
+  console.log("🔥 log of user name: ", req.session.user.id);
   const usersBlog = await Blog.findAll({
     where: {
-      user_id: 1, // should return atleast 2 plus the one we created.
+      // user_id: 3, // there is no user id property on Users. Maybe use name?
+      user_id: req.session.user.id, //3
     },
   });
   if (!usersBlog || usersBlog.length === 0) {
@@ -76,6 +88,7 @@ router.get("/dashboard", async (req, res) => {
       logged_in: req.session.logged_in,
       usersBlogs: usersBlogs,
       blogComments: blogComments,
+      subTitle,
     });
   } catch (err) {
     res.status(500).json(err);

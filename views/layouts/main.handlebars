@@ -1,50 +1,45 @@
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <link
-      href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'
-      rel='stylesheet'
-      integrity='sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
-      crossorigin='anonymous'
-    />
-    <link rel='stylesheet' href='/css/styles.css' />
-    <title>MVC Project Template</title>
-  </head>
 
-  <body>
-    <header class='display-flex justify-space-between align-center p-2'>
-      {{> navbar }}
-      <!-- Only display the logout button if the user is logged in -->
-      {{#if logged_in}}
-        <nav>
-          <span>Logged in as: {{user.name}}</span>
-        </nav>
-      {{/if}}
-    </header>
-    <main class='container container-fluid mt-5'>
-      {{{body}}}  {{!-- should display the homepage --}}
-    </main>
-    <footer>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' rel='stylesheet'
+    integrity='sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN' crossorigin='anonymous' />
+  <link rel='stylesheet' href='/css/styles.css' />
+  <title>MVC Project Template</title>
+</head>
 
-    </footer>
-    {{!-- boostrap CDN Script --}}
-    <script
-      src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'
-      integrity='sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL'
-      crossorigin='anonymous'
-    ></script>
-    <!-- Only include the logout script if the user is logged in -->
-  
-  </body>
+<body>
+  <header class='display-flex justify-space-between align-center p-2'>
+    {{> navbar }}
+    <!-- Only display the logout button if the user is logged in -->
+    {{#if logged_in}}
+    <nav>
+      <span>Logged in as: {{user.name}}</span>
+    </nav>
+    {{/if}}
+  </header>
+  <main class='container container-fluid mt-5'>
+    {{{body}}} {{!-- should display the homepage --}}
+  </main>
+  <footer>
+
+  </footer>
+  {{!-- boostrap CDN Script --}}
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'
+    integrity='sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL'
+    crossorigin='anonymous'></script>
+  <!-- Only include the logout script if the user is logged in -->
+  {{!-- <script src="/js/blogCrud.js"></script> --}}
+</body>
 
 </html>
 
-{{!-- Where is the {{{body}}} coming from? It is convention but the homepage.handlebars is what gets 
-    rendered into the {{{body}}} because that is the file that we render when hitting the root endpoint. 
-    So, basically it looks in the views then the layout and thats the file that is used to display the {{body}}.   --}}
+{{!-- Where is the {{{body}}} coming from? It is convention but the homepage.handlebars is what gets
+rendered into the {{{body}}} because that is the file that we render when hitting the root endpoint.
+So, basically it looks in the views then the layout and thats the file that is used to display the {{body}}. --}}
 
-   
-{{!--  {{}} you can do html/js too, and {{{}}} is for--}}
+
+{{!-- {{}} you can do html/js too, and {{{}}} is for--}}
 
 {{!-- If you have partials, the file name has to be 'partials' or else you get errors. --}}

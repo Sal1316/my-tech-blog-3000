@@ -21,12 +21,36 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/blogs", (req, res) => {
-  console.log("🏀 req.body from BLOGs POST:", req.body);
-  console.log("USER ID from Blogs: ", req.session.user.id);
-
   Blog.create({ ...req.body, user_id: req.session.user.id })
     .then((reviewData) => res.json(reviewData))
     .catch((err) => res.json(err));
+});
+
+router.delete("/blogs/:id", (req, res) => {
+  Blog.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((reviewData) => res.json(reviewData))
+    .catch((err) => res.json(err));
+});
+
+router.put("/blogs/:id", async (req, res) => {
+  try {
+    const blogData = await Blog.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!blogData[0]) {
+      res.status(404).json({ message: "No blog with this id!" });
+      return;
+    }
+    res.status(200).json(blogData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 router.post("/comments", (req, res) => {
